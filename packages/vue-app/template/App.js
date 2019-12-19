@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 <% if (features.asyncData || features.fetch) { %>
 import {
   getMatchedComponentsInstances,
@@ -6,9 +7,19 @@ import {
   globalHandleError
 } from './utils'
 <% } %>
-<% if (features.layouts && components.ErrorPage) { %>import NuxtError from '<%= components.ErrorPage %>'<% } %>
-<% if (loading) { %>import NuxtLoading from '<%= (typeof loading === "string" ? loading : "./components/nuxt-loading.vue") %>'<% } %>
-<% if (buildIndicator) { %>import NuxtBuildIndicator from './components/nuxt-build-indicator'<% } %>
+
+<% if (features.layouts && components.ErrorPage) { %>
+import NuxtError from '<%= components.ErrorPage %>'
+<% } %>
+
+<% if (loading) { %>
+import NuxtLoading from '<%= (typeof loading === "string" ? loading : "./components/nuxt-loading.vue") %>'
+<% } %>
+
+<% if (buildIndicator) { %>
+import NuxtBuildIndicator from './components/nuxt-build-indicator'
+<% } %>
+
 <% css.forEach((c) => { %>
 import '<%= relativeToBuild(resolvePath(c.src || c, { isStyle: true })) %>'
 <% }) %>
@@ -22,7 +33,8 @@ import '<%= relativeToBuild(resolvePath(c.src || c, { isStyle: true })) %>'
   }
 }).join('\n') %>
 
-const layouts = { <%= Object.keys(layouts).map(key => `"_${key}": _${hash(key)}`).join(',') %> }<%= isTest ? '// eslint-disable-line' : '' %>
+<%= isTest ? '// eslint-disable-line' : '' %>
+const layouts = { <%=Object.keys(layouts).map(key => `"_${key}": _${hash(key)}`).join(',') %> }
 
 <% if (splitChunks.layouts) { %>let resolvedLayouts = {}<% } %>
 <% } %>
